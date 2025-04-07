@@ -1,4 +1,4 @@
-// Copyright 2021 The Casdoor Authors. All Rights Reserved.
+// Copyright 2021 The IAM Authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
 import Sdk from '../src';
 
 const sdkConfig = {
-    serverUrl: 'https://door.casbin.com',
-    clientId: '014ae4bd048734ca2dea',
-    appName: 'app-casnode',
-    organizationName: 'casbin',
+    serverUrl: 'https://iam.hanzo.ai',
+    clientId: 'ce89cf9741eccb80367f',
+    appName: 'cloud',
+    organizationName: 'built-in',
     redirectPath: '/callback',
 };
 
@@ -76,14 +76,14 @@ describe('getSigninUrl', () => {
     it('with fixed state', () => {
         const state = 'test-state';
         const sdk = new Sdk(sdkConfig);
-        sessionStorage.setItem('casdoor-state', state);
+        sessionStorage.setItem('iam-state', state);
         expect(sdk.getSigninUrl()).toContain(`state=${state}`);
     });
 
     it('with random state', () => {
         const sdk = new Sdk(sdkConfig);
         const url = sdk.getSigninUrl();
-        const state = sessionStorage.getItem('casdoor-state');
+        const state = sessionStorage.getItem('iam-state');
         expect(url).toContain(`state=${state}`);
     });
 });
