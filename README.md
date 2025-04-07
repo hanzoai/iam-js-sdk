@@ -1,23 +1,23 @@
-# casdoor-js-sdk
+# iam-js-sdk
 
 [![NPM version][npm-image]][npm-url]
 [![NPM download][download-image]][download-url]
-[![codebeat badge](https://codebeat.co/badges/6f2ad052-7fc8-42e1-b40f-0ca2648530c2)](https://codebeat.co/projects/github-com-casdoor-casdoor-js-sdk-master)
-[![GitHub Actions](https://github.com/casdoor/casdoor-js-sdk/actions/workflows/release.yml/badge.svg)](https://github.com/casdoor/casdoor-js-sdk/actions/workflows/release.yml)
-[![GitHub Actions](https://github.com/casdoor/casdoor-js-sdk/actions/workflows/build.yml/badge.svg)](https://github.com/casdoor/casdoor-js-sdk/actions/workflows/build.yml)
-[![Coverage Status](https://codecov.io/gh/casdoor/casdoor-js-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/casdoor/casdoor-js-sdk)
-[![Release](https://img.shields.io/github/release/casdoor/casdoor-js-sdk.svg)](https://github.com/casdoor/casdoor-js-sdk/releases/latest)
+[![codebeat badge](https://codebeat.co/badges/6f2ad052-7fc8-42e1-b40f-0ca2648530c2)](https://codebeat.co/projects/github-com-iam-iam-js-sdk-master)
+[![GitHub Actions](https://github.com/hanzoai/iam-js-sdk/actions/workflows/release.yml/badge.svg)](https://github.com/hanzoai/iam-js-sdk/actions/workflows/release.yml)
+[![GitHub Actions](https://github.com/hanzoai/iam-js-sdk/actions/workflows/build.yml/badge.svg)](https://github.com/hanzoai/iam-js-sdk/actions/workflows/build.yml)
+[![Coverage Status](https://codecov.io/gh/iam/iam-js-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/iam/iam-js-sdk)
+[![Release](https://img.shields.io/github/release/iam/iam-js-sdk.svg)](https://github.com/hanzoai/iam-js-sdk/releases/latest)
 [![Discord](https://img.shields.io/discord/1022748306096537660?logo=discord&label=discord&color=5865F2)](https://discord.gg/5rPsrAzK7S)
 
-[npm-image]: https://img.shields.io/npm/v/casdoor-js-sdk.svg?style=flat-square
-[npm-url]: https://npmjs.com/package/casdoor-js-sdk
+[npm-image]: https://img.shields.io/npm/v/iam-js-sdk.svg?style=flat-square
+[npm-url]: https://npmjs.com/package/iam-js-sdk
 
-[download-image]: https://img.shields.io/npm/dm/casdoor-js-sdk.svg?style=flat-square
-[download-url]: https://npmjs.com/package/casdoor-js-sdk
+[download-image]: https://img.shields.io/npm/dm/iam-js-sdk.svg?style=flat-square
+[download-url]: https://npmjs.com/package/iam-js-sdk
 
-This is Casdoor's SDK for js will allow you to easily connect your application to the [Casdoor authentication system](https://casdoor.org) without having to implement it from scratch.
+This is IAM's SDK for js will allow you to easily connect your application to the [IAM authentication system](https://iam.org) without having to implement it from scratch.
 
-Casdoor SDK is very simple to use. We will show you the steps below.
+IAM SDK is very simple to use. We will show you the steps below.
 
 ## Usage in NPM environment
 
@@ -25,10 +25,10 @@ Casdoor SDK is very simple to use. We will show you the steps below.
 
 ~~~shell script
 # NPM
-npm i casdoor-js-sdk
+npm i iam-js-sdk
 
 # Yarn
-yarn add casdoor-js-sdk
+yarn add iam-js-sdk
 ~~~
 
 ### Init SDK
@@ -37,15 +37,15 @@ Initialization requires 5 parameters, which are all string type:
 
 | Name (in order)  | Must | Description                                                                                    |
 |------------------|------|------------------------------------------------------------------------------------------------|
-| serverUrl        | Yes  | your Casdoor server URL                                                                        |
-| clientId         | Yes  | the Client ID of your Casdoor application                                                      |
-| appName          | Yes  | the name of your Casdoor application                                                           |
-| organizationName | Yes  | the name of the Casdoor organization connected with your Casdoor application                   |
-| redirectPath     | No   | the path of the redirect URL for your Casdoor application, will be `/callback` if not provided |
-| signinPath       | No   | the path of the signin URL for your Casdoor application, will be `/api/signin` if not provided |
+| serverUrl        | Yes  | your IAM server URL                                                                        |
+| clientId         | Yes  | the Client ID of your IAM application                                                      |
+| appName          | Yes  | the name of your IAM application                                                           |
+| organizationName | Yes  | the name of the IAM organization connected with your IAM application                   |
+| redirectPath     | No   | the path of the redirect URL for your IAM application, will be `/callback` if not provided |
+| signinPath       | No   | the path of the signin URL for your IAM application, will be `/api/signin` if not provided |
 
 ```typescript
-import {SDK, SdkConfig} from 'casdoor-js-sdk'
+import {SDK, SdkConfig} from 'iam-js-sdk'
 
 const sdkConfig: SdkConfig = {
     serverUrl: "https://door.casbin.com",
@@ -68,8 +68,8 @@ Initialization parameters are consistent with the previous node.js section:
 ```html
 <!--init the SDK-->
 <script type="module">
-  //Import from cdn(you can choose the appropriate cdn source according to your needs), or just from the local(download the casdoor-js-sdk first)
-  import SDK from 'https://unpkg.com/casdoor-js-sdk@latest/lib/esm/sdk.js'
+  //Import from cdn(you can choose the appropriate cdn source according to your needs), or just from the local(download the iam-js-sdk first)
+  import SDK from 'https://unpkg.com/iam-js-sdk@latest/lib/esm/sdk.js'
   const sdkConfig = {
     serverUrl: "https://door.casbin.com",
     clientId: "014ae4bd048734ca2dea",
@@ -100,7 +100,7 @@ Initialization parameters are consistent with the previous node.js section:
 getSignupUrl(enablePassword)
 ```
 
-Return the casdoor url that navigates to the registration screen
+Return the iam url that navigates to the registration screen
 
 #### Get sign in url
 
@@ -108,7 +108,7 @@ Return the casdoor url that navigates to the registration screen
 getSigninUrl()
 ```
 
-Return the casdoor url that navigates to the login screen
+Return the iam url that navigates to the login screen
 
 #### Get user profile page url
 
@@ -116,7 +116,7 @@ Return the casdoor url that navigates to the login screen
 getUserProfileUrl(userName, account)
 ```
 
-Return the url to navigate to a specific user's casdoor personal page
+Return the url to navigate to a specific user's iam personal page
 
 #### Get my profile page url
 
@@ -130,7 +130,7 @@ getMyProfileUrl(account)
 signin(serverUrl, signinPath)
 ```
 
-Handle the callback url from casdoor, call the back-end api to complete the login process
+Handle the callback url from iam, call the back-end api to complete the login process
 
 #### Determine whether silent sign-in is being used
 
@@ -155,7 +155,7 @@ First, let's explain the two parameters of this method, which are the callback m
 ````typescript
 popupSignin(serverUrl, signinPath)
 ````
-Popup a window to handle the callback url from casdoor, call the back-end api to complete the login process and store the token in localstorage, then reload the main window. See Demo: [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example).
+Popup a window to handle the callback url from iam, call the back-end api to complete the login process and store the token in localstorage, then reload the main window. See Demo: [iam-nodejs-react-example](https://github.com/iam/iam-nodejs-react-example).
 
 ### OAuth2 PKCE flow sdk (for SPA without backend)
 
@@ -235,7 +235,7 @@ By default, this package will use sessionStorage to persist the pkce_state. On (
 In this case it you can opt in to use localStorage instead of sessionStorage:
 
 ```typescript
-import {SDK, SdkConfig} from 'casdoor-js-sdk'
+import {SDK, SdkConfig} from 'iam-js-sdk'
 
 const sdkConfig = {
   // ...
@@ -247,12 +247,12 @@ const sdk = new SDK(sdkConfig)
 
 ## More examples
 
-To see how to use casdoor frontend SDK with casdoor backend SDK, you can refer to examples below:
+To see how to use iam frontend SDK with iam backend SDK, you can refer to examples below:
 
-[casnode](https://github.com/casbin/casnode): casdoor-js-sdk + casdoor-go-sdk
+[casnode](https://github.com/casbin/casnode): iam-js-sdk + iam-go-sdk
 
-[casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example): casdoor-vue-sdk + casdoor-python-sdk
+[iam-python-vue-sdk-example](https://github.com/iam/iam-python-vue-sdk-example): iam-vue-sdk + iam-python-sdk
 
 
 
-A more detailed description can be moved to:[casdoor-sdk](https://casdoor.org/docs/how-to-connect/sdk)
+A more detailed description can be moved to:[iam-sdk](https://iam.org/docs/how-to-connect/sdk)

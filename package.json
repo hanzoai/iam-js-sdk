@@ -1,11 +1,14 @@
 {
-  "name": "casdoor-js-sdk",
+  "name": "@hanzo/iam-js-sdk",
   "version": "0.0.1",
-  "description": "Javascript client SDK for Casdoor",
+  "description": "Javascript client SDK for IAM",
   "main": "lib/cjs/index.js",
   "typings": "lib/cjs/index.d.ts",
   "module": "lib/esm/index.js",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepack": "run-s build",
     "postpack": "run-s clean",
@@ -61,20 +64,20 @@
     "oauth",
     "oidc",
     "casbin",
-    "casdoor"
+    "iam"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/casdoor/casdoor-js-sdk.git"
+    "url": "https://github.com/hanzoai/iam-js-sdk.git"
   },
   "author": {
     "name": "Zxilly",
     "email": "zxilly@outlook.com"
   },
   "bugs": {
-    "url": "https://github.com/casdoor/casdoor-js-sdk/issues"
+    "url": "https://github.com/hanzoai/iam-js-sdk/issues"
   },
-  "homepage": "https://github.com/casdoor/casdoor-js-sdk",
+  "homepage": "https://github.com/hanzoai/iam-js-sdk",
   "dependencies": {
     "js-pkce": "^1.3.0",
     "jwt-decode": "^4.0.0"

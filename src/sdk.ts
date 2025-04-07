@@ -1,4 +1,4 @@
-// Copyright 2021 The Casdoor Authors. All Rights Reserved.
+// Copyright 2021 The IAM Authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,17 +18,17 @@ import IObject from "js-pkce/dist/IObject";
 import {jwtDecode, JwtHeader} from "jwt-decode";
 
 export interface SdkConfig {
-    serverUrl: string, // your Casdoor server URL, e.g., "https://door.casbin.com" for the official demo site
-    clientId: string, // the Client ID of your Casdoor application, e.g., "014ae4bd048734ca2dea"
-    appName: string, // the name of your Casdoor application, e.g., "app-casnode"
-    organizationName: string // the name of the Casdoor organization connected with your Casdoor application, e.g., "casbin"
-    redirectPath?: string // the path of the redirect URL for your Casdoor application, will be "/callback" if not provided
-    signinPath?: string // the path of the signin URL for your Casdoor applcation, will be "/api/signin" if not provided
+    serverUrl: string, // your IAM server URL, e.g., "https://door.casbin.com" for the official demo site
+    clientId: string, // the Client ID of your IAM application, e.g., "014ae4bd048734ca2dea"
+    appName: string, // the name of your IAM application, e.g., "app-casnode"
+    organizationName: string // the name of the IAM organization connected with your IAM application, e.g., "casbin"
+    redirectPath?: string // the path of the redirect URL for your IAM application, will be "/callback" if not provided
+    signinPath?: string // the path of the signin URL for your IAM applcation, will be "/api/signin" if not provided
     scope?: string // apply for permission to obtain the user information, will be "profile" if not provided
     storage?: Storage // the storage to store the state, will be sessionStorage if not provided
 }
 
-// reference: https://github.com/casdoor/casdoor-go-sdk/blob/90fcd5646ec63d733472c5e7ce526f3447f99f1f/auth/jwt.go#L19-L32
+// reference: https://github.com/iam/iam-go-sdk/blob/90fcd5646ec63d733472c5e7ce526f3447f99f1f/auth/jwt.go#L19-L32
 export interface Account {
     organization: string,
     username: string,
@@ -190,18 +190,18 @@ class Sdk {
     }
 
     getOrSaveState(): string {
-        const state = sessionStorage.getItem("casdoor-state");
+        const state = sessionStorage.getItem("iam-state");
         if (state !== null) {
             return state;
         } else {
             const state = Math.random().toString(36).slice(2);
-            sessionStorage.setItem("casdoor-state", state);
+            sessionStorage.setItem("iam-state", state);
             return state;
         }
     }
 
     clearState() {
-        sessionStorage.removeItem("casdoor-state");
+        sessionStorage.removeItem("iam-state");
     }
 
     public getSignupUrl(enablePassword: boolean = true): string {
@@ -282,7 +282,7 @@ class Sdk {
             }
 
             const message = event.data;
-            if (message.tag !== "Casdoor" || message.type !== "SilentSignin") {
+            if (message.tag !== "IAM" || message.type !== "SilentSignin") {
                 return;
             }
             if (message.data === 'success') {
