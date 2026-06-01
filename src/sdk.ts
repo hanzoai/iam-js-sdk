@@ -189,12 +189,65 @@ class Sdk {
         });
     }
 
+    /**
+     * Generate a cryptographically-strong random OAuth `state` value.
+     *
+     * OAuth 2.0 (RFC 6749 §10.12) requires the `state` parameter to be
+     * unguessable to prevent CSRF against the authorization endpoint.
+     * `Math.random()` is not cryptographically secure and must not be
+     * used here. We use the Web Crypto API's `getRandomValues` and
+     * encode the result as URL-safe base64.
+     *
+     * @param byteLength number of random bytes to generate (default 32)
+     */
+    private generateRandomState(byteLength: number = 32): string {
+        const bytes = new Uint8Array(byteLength);
+
+        // Prefer the Web Crypto API (browsers, modern Node 19+).
+        const g: any = typeof globalThis !== "undefined" ? globalThis : {};
+        const w: any = typeof window !== "undefined" ? window : {};
+        const webCrypto: Crypto | undefined =
+            (g.crypto && typeof g.crypto.getRandomValues === "function" && g.crypto) ||
+            (w.crypto && typeof w.crypto.getRandomValues === "function" && w.crypto) ||
+            undefined;
+        if (webCrypto) {
+            webCrypto.getRandomValues(bytes);
+        } else {
+            // Fallback for older Node-based test/SSR environments (e.g. Node < 19,
+            // or jsdom builds where `window.crypto` is not polyfilled).
+            try {
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+                const nodeCrypto = require("crypto");
+                if (nodeCrypto && typeof nodeCrypto.randomFillSync === "function") {
+                    nodeCrypto.randomFillSync(bytes);
+                } else {
+                    throw new Error("randomFillSync unavailable");
+                }
+            } catch (e) {
+                throw new Error(
+                    "No cryptographically-secure RNG is available; cannot generate a secure OAuth state value"
+                );
+            }
+        }
+
+        // URL-safe base64 (RFC 4648 §5) without padding.
+        let binary = "";
+        for (let i = 0; i < bytes.length; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        const b64 =
+            typeof btoa === "function"
+                ? btoa(binary)
+                : Buffer.from(binary, "binary").toString("base64");
+        return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    }
+
     getOrSaveState(): string {
         const state = sessionStorage.getItem("iam-state");
         if (state !== null) {
             return state;
         } else {
-            const state = Math.random().toString(36).slice(2);
+            const state = this.generateRandomState();
             sessionStorage.setItem("iam-state", state);
             return state;
         }
