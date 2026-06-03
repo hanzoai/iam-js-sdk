@@ -86,6 +86,26 @@ describe('getSigninUrl', () => {
         const state = sessionStorage.getItem('iam-state');
         expect(url).toContain(`state=${state}`);
     });
+
+    it('generated state is cryptographically strong and URL-safe', () => {
+        const sdk = new Sdk(sdkConfig);
+        const state = sdk.getOrSaveState();
+        // 32 random bytes encode to 43 chars of unpadded URL-safe base64.
+        expect(state.length).toBeGreaterThanOrEqual(43);
+        // Must contain only URL-safe base64 alphabet (no +, /, =).
+        expect(state).toMatch(/^[A-Za-z0-9_-]+$/);
+    });
+
+    it('generated states are unique across instances', () => {
+        const states = new Set<string>();
+        for (let i = 0; i < 64; i++) {
+            sessionStorage.clear();
+            const sdk = new Sdk(sdkConfig);
+            states.add(sdk.getOrSaveState());
+        }
+        // With 32 bytes of entropy, 64 draws collide with probability ~2^-244.
+        expect(states.size).toBe(64);
+    });
 });
 
 describe('parseAccessToken', () => {
