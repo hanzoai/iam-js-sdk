@@ -182,8 +182,8 @@ class Sdk {
         this.pkce = new PKCE({
             client_id: this.config.clientId,
             redirect_uri: `${window.location.origin}${this.config.redirectPath}`,
-            authorization_endpoint: `${this.config.serverUrl.trim()}/login/oauth/authorize`,
-            token_endpoint: `${this.config.serverUrl.trim()}/api/login/oauth/access_token`,
+            authorization_endpoint: `${this.config.serverUrl.trim()}/v1/iam/oauth/authorize`,
+            token_endpoint: `${this.config.serverUrl.trim()}/v1/iam/oauth/access_token`,
             requested_scopes: this.config.scope || "profile",
             storage: this.config.storage,
         });
@@ -262,14 +262,16 @@ class Sdk {
             sessionStorage.setItem("signinUrl", this.getSigninUrl());
             return `${this.config.serverUrl.trim()}/signup/${this.config.appName}`;
         } else {
-            return this.getSigninUrl().replace("/login/oauth/authorize", "/signup/oauth/authorize");
+            // Canonical IAM exposes one authorize endpoint (/v1/iam/oauth/authorize)
+            // for both signin and signup; the edge routes signup itself.
+            return this.getSigninUrl();
         }
     }
 
     public getSigninUrl(): string {
         const redirectUri = this.config.redirectPath && this.config.redirectPath.includes('://') ? this.config.redirectPath : `${window.location.origin}${this.config.redirectPath}`;
         const state = this.getOrSaveState();
-        return `${this.config.serverUrl.trim()}/login/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${this.config.scope}&state=${state}`;
+        return `${this.config.serverUrl.trim()}/v1/iam/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${this.config.scope}&state=${state}`;
     }
 
     public getUserProfileUrl(userName: string, account: Account): string {
@@ -386,7 +388,7 @@ class Sdk {
     }
 
     public async getUserInfo(accessToken: string): Promise<Response> {
-        return fetch(`${this.config.serverUrl.trim()}/api/userinfo`, {
+        return fetch(`${this.config.serverUrl.trim()}/v1/iam/oauth/userinfo`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
