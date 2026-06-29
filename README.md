@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/hero.svg" alt="iam-js-sdk" width="880"></p>
+
 # iam-js-sdk
 
 [![NPM version][npm-image]][npm-url]
