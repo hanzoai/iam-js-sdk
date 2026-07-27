@@ -23,7 +23,7 @@ export interface SdkConfig {
     appName: string, // the name of your IAM application, e.g., "app-casnode"
     organizationName: string // the name of the IAM organization connected with your IAM application, e.g., "casbin"
     redirectPath?: string // the path of the redirect URL for your IAM application, will be "/callback" if not provided
-    signinPath?: string // the path of the signin URL for your IAM applcation, will be "/api/signin" if not provided
+    signinPath?: string // the path of the signin URL for your IAM applcation, will be "/v1/iam/signin" if not provided
     scope?: string // apply for permission to obtain the user information, will be "profile" if not provided
     storage?: Storage // the storage to store the state, will be sessionStorage if not provided
 }
@@ -315,7 +315,7 @@ class Sdk {
             });
         }
 
-        return fetch(`${serverUrl}${signinPath || this.config.signinPath || '/api/signin'}?code=${code}&state=${state}`, {
+        return fetch(`${serverUrl}${signinPath || this.config.signinPath || '/v1/iam/signin'}?code=${code}&state=${state}`, {
             method: "POST",
             credentials: "include",
         }).then(res => res.json());
