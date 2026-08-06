@@ -1,0 +1,17 @@
+# Canonical CI/CD config for hanzoai/iam-js-sdk — read by the hanzoai/ci
+# reusable (.hanzo/workflows/cicd.yml) and by platform.hanzo.ai.
+#
+# An npm package (the JS client for Hanzo IAM): ships from a tag, builds no
+# image, so no `images:` and no `deploy:`. .github/workflows/release.yml is the
+# semantic-release publish lane and stays where it is.
+#
+# `--frozen-lockfile` because yarn.lock is committed: without it a resolution
+# that drifted from the lockfile passes here and breaks for whoever installs
+# it. `build` runs both tsconfig projects (cjs + esm) — the two artifacts the
+# package actually exports.
+
+test:
+  - name: test
+    run: yarn install --frozen-lockfile && yarn test
+  - name: build
+    run: yarn build
