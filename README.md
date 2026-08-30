@@ -42,7 +42,7 @@ Initialization requires 5 parameters, which are all string type:
 | appName          | Yes  | the name of your IAM application                                                           |
 | organizationName | Yes  | the name of the IAM organization connected with your IAM application                   |
 | redirectPath     | No   | the path of the redirect URL for your IAM application, will be `/callback` if not provided |
-| signinPath       | No   | the path of the signin URL for your IAM application, will be `/api/signin` if not provided |
+| signinPath       | No   | the path of the signin URL for your IAM application, will be `/v1/iam/signin` if not provided |
 
 ```typescript
 import {SDK, SdkConfig} from 'iam-js-sdk'
@@ -53,7 +53,7 @@ const sdkConfig: SdkConfig = {
     appName: "app-casnode",
     organizationName: "casbin",
     redirectPath: "/callback",
-    signinPath: "/api/signin",
+    signinPath: "/v1/iam/signin",
 }
 const sdk = new SDK(sdkConfig)
 // call sdk to handle
@@ -76,7 +76,7 @@ Initialization parameters are consistent with the previous node.js section:
     appName: "app-casnode",
     organizationName: "casbin",
     redirectPath: "/callback",
-    signinPath: "/api/signin",
+    signinPath: "/v1/iam/signin",
   }
   window.sdk = new SDK(sdkConfig)
 </script>
