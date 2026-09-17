@@ -6,7 +6,9 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "declaration": true,
+    "rootDir": "./src",
     "allowSyntheticDefaultImports": true,
+    "types": ["node", "jest"],
   },
   "include": ["src/**/*"]
 }
